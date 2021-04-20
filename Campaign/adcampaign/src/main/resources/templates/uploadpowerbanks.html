@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: headfragment">
+<style>
+#editModal.in {
+	z-index: 999999;
+}
+</style>
+
+</head>
+<body>
+	<header th:replace="topmenu :: topmenufragment"> </header>
+	<div th:replace="leftmenu :: leftmenu"></div>
+	<section>
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
+				<div class="row">
+					<div class="col-lg-12">
+						<h3 class="page-header">
+							<i class="fa fa fa-bars"></i> Upload Powerbanks to Campaign
+						</h3>
+						<ol class="breadcrumb">
+							<li><i class="fa fa-home"></i><a href="index">Home</a></li>
+							<li><i class="fa fa-bars"></i>Campaign</li>
+							<li><i class="fa fa-bars"></i><a href="/ui/campaign/list">Campaigns</a></li>
+							<li><i class="fa fa-square-o"></i>Upload Powerbanks</li>
+						</ol>
+					</div>
+				</div>
+
+				<!-- page start-->
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div th:if="${message}">
+				          <span th:text="${message}"/>
+				        </div>
+						<form method="POST" enctype="multipart/form-data" th:action="@{/ui/campaign/uploadpowerbankexcel}" id="fileUploadForm">
+							<div class="form-group">
+							<input type="hidden" th:value="*{campaignid}" class="form-control" id="id" name="id"> 
+								<label class="control-label" for="uploadfile">Upload
+									File:</label> <input type="file" class="form-control" id="uploadfile"
+									placeholder="Upload File" name="uploadfile"></input>
+							</div>
+							<button type="submit" class="btn btn-default" id="btnSubmit">Upload</button> 
+							&nbsp;
+							<a th:href="@{'/ui/campaign/pbfilter/' + ${campaignid}}">Back</a>
+						</form>
+
+
+					</div>
+				</div>
+			</section>
+		</section>
+	</section>
+	<div th:replace="footer :: footer"></div>
+
+
+
+</body>
+</html>

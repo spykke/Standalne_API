@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: headfragment">
+<style>
+#editModal.in{
+    z-index: 999999;
+}
+
+</style>
+
+</head>
+<body>
+<header th:replace="topmenu :: topmenufragment">
+</header>
+<div th:replace="leftmenu :: leftmenu">
+</div>
+<section>
+ <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa fa-bars"></i> List of Banner Stations</h3>
+            <ol class="breadcrumb">
+              <li><i class="fa fa-home"></i><a href="index">Home</a></li>
+              <li><i class="fa fa-bars"></i>Campaign</li>
+              <li><i class="fa fa-bars"></i><a href="/banner">Video Banner</a></li>
+              <li><i class="fa fa-square-o"></i>Manage Stations</li>
+            </ol>
+          </div>
+        </div>
+        
+        <!-- page start-->
+      
+        <div class="row">
+        <div class="col-lg-12">
+        
+        <form action="#" 
+						th:object="${banner}" >
+						<div class="row">
+							<div class="form-group col-md-4">
+								<!-- <label for="name" class="col-form-label">Name</label>  -->
+								<input type="text" th:field="*{adName}" class="form-control" disabled="disabled" id="adName"> 
+							</div>
+						</div>
+						<div style="dispaly:none;">
+							
+								<input type="hidden" th:field="*{id}" class="form-control" id="cid"> 
+							
+						</div>
+		</form>					
+
+	<div><a th:href="@{'/banner/uploadstations/' + ${banner.id}}" style="margin-left: 250px">Upload Stations</a> </div>	
+
+	
+		<!-- <div class="form-group">
+            <label for="staionIdAdd" class="col-form-label">StationId:</label>
+            <input type="text" class="form-control" id="staionIdAdd" name="stationId"  style=" width : 400px;">
+          </div>
+		<br>
+		
+		<button id="btnaddpb">Add Station</button> -->
+		
+	
+	<br>
+		<h4> Assigned Staions</h4>
+		<table id="pbTable" class="table table-striped table-advance table-hover" >
+			<thead>
+	            <tr>
+	       			<th>StationId</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody id="tableBody">
+				<tr th:each="bs : ${stationList}">
+					<td th:text="${bs.stationId}"></td>
+					<td> <a class="btn btn-danger"  id="deleteButton" th:href="@{/bannerstation/delete/(id=${bs.id})}"><i class="icon_close_alt2"></i></a> </td>
+				</tr> 
+			</tbody>
+		</table>
+	</div>
+</div>
+</section>
+</section>
+</section>
+	<!-- <script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script> -->
+<div th:replace="footer :: footer"></div>
+
+	<script>
+    
+    $('#dllMerchantSelect').on('change',function(event){		
+		//event.preventDefault();
+		var href= "/ui/campaign/findShopByMerchantId/?merchantId="+$(this).val();	
+		var that = $("#dllShopSelect");
+		$.get(href, function(locations, status){
+			$(that).empty();
+			$(that).append('<option value="0">Select</option>');
+			$(locations).each( function(index, location){
+				var content='<option value="' + location.id + '">' + location.shopName + '</option>';
+				$(that).append(content);
+			});
+		});			
+	});
+    /* 
+    
+    $('#dllShopSelect').on('change',function(event){		
+		event.preventDefault();
+		var href= "/ui/campaign/findCabinetByShopId/?shopId="+$(this).val();	
+		var that = $("#dllCabinetSelect");
+		$.get(href, function(locations, status){
+			$(that).empty();
+			$(that).append('<option value="0">Select</option>');
+			$(locations).each( function(index, location){
+				var content='<option value="' + location.cabinetNo + '">' + location.cabinetNo + '</option>';
+				console.log(content);
+				$(that).append(content);
+				
+			});
+		});			
+	});
+  
+    $('#dllCabinetSelect').on('change',function(event){		
+		event.preventDefault();
+		var href= "/ui/campaign/findPowerBankByCabinetNo/?cabinetNo="+$(this).val();	
+		var that = $("#dllPowerBankSelect");
+		var table = $("#tableBody");
+		var cid = $("#cid").val();
+		var addUrl = "/ui/campaign/addPowerBanktoCampaign/?campaignid="+cid+"&powerbankid=";
+		$.get(href, function(locations, status){
+			$(that).empty();
+			$(table).empty();
+			$(locations).each( function(index, location){
+				var content='<option value="' + location.id + '">' + location.powerBankNo + '</option>';
+				console.log(content);
+				$(that).append(content);
+				
+				var tableContent='<tr><td>'+location.powerBankNo+'</td><td><a href="'+addUrl+location.id+'">Add</a>  </td></tr>';
+				$(table).append(tableContent);
+			});
+		});			
+	});
+     */
+    
+    $('#dllShopSelect').on('change',function(event){		
+		event.preventDefault();
+		var href= "/ui/campaign/findPowerBankByShopId/?shopId="+$(this).val();	
+		var that = $("#dllPowerBankSelect");
+		var index = 1;
+		$.get(href, function(locations, status){
+			$(that).empty();
+			$(locations).each( function(index, location){
+				var content='<option value=' + location.id + '>' + location.powerBankNo + '</option>';
+				$(that).append(content);
+				
+			});
+		});			
+	});
+	
+	$('#btnaddpb').on('click',function(event){		
+		event.preventDefault();
+		var href = "/ui/campaign/addPowerBankListtoCampaign";
+		var data = {
+				"campaignid": $('#cid').val(),
+				"powerbankids": JSON.stringify($('#dllPowerBankSelect').val()) 
+				
+		}
+		var table = $("#tableBody");
+		console.log(data);
+		$.get(href,data, function(result, status){
+			console.log(result);
+			$(table).empty();
+			$(result).each( function(index, location){
+				var tableContent='<tr><td>'+location.powerBank.powerBankNo+'</td></tr>';
+				$(table).append(tableContent);
+			});
+			
+		});
+		
+	});
+    
+</script>
+
+</body>
+</html>

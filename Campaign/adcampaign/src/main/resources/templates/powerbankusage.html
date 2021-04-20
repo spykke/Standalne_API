@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: headfragment">
+<style>
+#editModal.in{
+    z-index: 999999;
+}
+
+</style>
+
+</head>
+<body>
+<header th:replace="topmenu :: topmenufragment">
+</header>
+<div th:replace="leftmenu :: leftmenu">
+</div>
+<section>
+ <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa fa-bars"></i>Powerbank Usage</h3>
+            <ol class="breadcrumb">
+              <li><i class="fa fa-home"></i><a href="index">Home</a></li>
+              <li><i class="fa fa-bars"></i>Campaign</li>
+              <li><i class="fa fa-square-o"></i>Powerbank Usage</li>
+            </ol>
+          </div>
+        </div>
+        
+        <!-- page start-->
+      
+        <div class="row">
+        <div class="col-lg-12">
+					<form action="#" th:action="@{/ui/campaign/pbusage}"
+						 method="post">
+						<div class="row">
+							<div class="form-group col-md-8">
+								<label for="name" class="col-form-label">PowerBankNo</label> <input
+									type="text" class="form-control" id="pbnumber" name="pbnumber"
+									> 
+							</div>
+							<div class="form-group col-md-8">
+							<label for="startDate">Start Date</label>
+				                <div class="input-group date">
+				                    <input type="text" class="form-control" name="startdate" id="startdate" autocomplete="off" />
+				                    <div class="input-group-append">
+				                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+				                    </div>
+				                </div>
+							</div>
+							
+							<div class="form-group col-md-8">
+							<label for="endDate">End Date</label>
+				                <div class="input-group date">
+				                    <input type="text" class="form-control" name="enddate" id="enddate" autocomplete="off" />
+				                    <div class="input-group-append">
+				                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+				                    </div>
+				                </div>
+							</div>
+							
+							<div class="col-md-6">
+								<input type="submit" class="btn btn-primary" value="Show Usage">
+							</div>
+
+							<div class="form-group col-md-8"></div>
+
+						</div>
+					</form>
+				</div>
+				
+				<table id="campaignTable" class="display" border="1">
+	      
+	       <!-- Header Table -->
+	       <thead>
+	            <tr>
+	       			<th>
+	       				Order No
+	       			</th>
+					<th>
+						User
+					</th>
+					<th>Package</th>
+					<th>PowerBank No</th>
+					<th>Rent Cabinet No</th>
+					<th>Return Cabinet No</th>
+					<th>Pickup Time</th>
+					<th>Used Time</th>
+					
+		        </tr>
+	        </thead>
+	        <!-- Footer Table -->
+	        <tbody>
+									<tr th:each="order : ${orders}">
+										<td th:text="${order.orderNo}"></td>
+										<td th:text="${order.appUser.nickname}"></td>
+										<td th:text="${order.userPackage.title}"></td>
+										<td th:text="${order.powerBankNo}"></td>
+										<td th:text="${order.rentCabinetNo}"></td>
+										<td th:text="${order.returnCabinetNo}"></td>
+										<td th:text="${order.createTime}"></td>
+										<td th:text="${order.usedTime}"></td>
+									</tr>
+								</tbody>
+	        
+	        <tfoot>
+	            <tr>
+	                <th>Order No</th>
+					<th>User</th>
+					<th>Package</th>
+					<th>PowerBank No</th>
+					<th>Rent Cabinet No</th>
+					<th>Return Cabinet No</th>
+					<th>Pickup Time</th>
+					<th>Used Time</th>
+	            </tr>
+	        </tfoot>
+	    </table>
+			</div>
+			</section>
+			</section>
+			</section>
+		<!-- </div> 
+	</div> -->
+
+	<!-- <script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+ -->
+ <div th:replace="footer :: footer"></div>
+	<script>
+    $('#startdate').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+    $('#enddate').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+    
+    
+    $('#dllMerchantSelect').on('change',function(event){		
+		event.preventDefault();
+		var href= "/ui/campaign/findShopByMerchantId/?merchantId="+$(this).val();	
+		var that = $("#dllShopSelect");
+		$.get(href, function(locations, status){
+			$(that).empty();
+			$(locations).each( function(index, location){
+				var content='<option value="' + location.id + '">' + location.shopName + '</option>';
+				$(that).append(content);
+			});
+		});			
+	});
+    
+    
+    $('#dllShopSelect').on('change',function(event){		
+		event.preventDefault();
+		var href= "/ui/campaign/findCabinetByShopId/?shopId="+$(this).val();	
+		var that = $("#dllCabinetSelect");
+		$.get(href, function(locations, status){
+			$(that).empty();
+			$(locations).each( function(index, location){
+				var content='<option value="' + location.cabinetNo + '">' + location.cabinetNo + '</option>';
+				console.log(content);
+				$(that).append(content);
+				
+			});
+		});			
+	});
+    
+    $('#dllCabinetSelect').on('change',function(event){		
+		event.preventDefault();
+		var href= "/ui/campaign/findPowerBankByCabinetNo/?cabinetNo="+$(this).val();	
+		var that = $("#dllPowerBankSelect");
+		$.get(href, function(locations, status){
+			$(that).empty();
+			$(locations).each( function(index, location){
+				var content='<option value="' + location.id + '">' + location.powerBankNo + '</option>';
+				console.log(content);
+				$(that).append(content);
+				
+			});
+		});			
+	});
+    
+</script>
+
+</body>
+</html>

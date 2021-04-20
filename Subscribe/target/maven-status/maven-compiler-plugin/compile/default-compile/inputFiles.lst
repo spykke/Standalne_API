@@ -1,0 +1,17 @@
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/SubscribeApplication.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/SubscribeController.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/entity/Client.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/SubscribeService.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/VideoBannerApiController.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/entity/BannerAd.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/SubscribeEntity.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/entity/BannerStation.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/repository/VideoBannerRepository.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/entity/AppUser.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/repository/ClientJpaRepository.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/repository/AppUserRepository.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/repository/TrackingBannerRepository.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/repository/BannerStationRepository.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/entity/TrackingBannerAd.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/banner/repository/BannerRepository.java
+/home/administrator/STS_Workspace/source_codes/Subscribe/src/main/java/com/spykke/subscribe/SubscribeRepository.java

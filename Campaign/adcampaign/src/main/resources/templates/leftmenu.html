@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--sidebar start-->
+    <aside th:fragment="leftmenu">
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu">
+          <li class="active">
+            <a class="" th:href="@{/index}">
+                          <i class="icon_house_alt"></i>
+                          <span>Dashboard</span>
+                      </a>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icon_document_alt"></i>
+                          <span>Campaign</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+            <ul class="sub">
+              <li><a class="" th:href="@{/ui/campaign/list}">Campaign</a></li>
+              <li><a class="" th:href="@{/banner}">Video Banner</a></li>
+              <li><a class="" th:href="@{/client}">Client</a></li>
+              <li><a class="" th:href="@{/ui/campaign/pbusage}">Powerbank Report</a></li>
+              <li><a class="" th:href="@{/banneradtracking}">Banner Tracking</a></li>	
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icon_desktop"></i>
+                          <span>Master Data</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+            <ul class="sub">
+                <li><a class="" th:href="@{/location}">Location</a></li>
+              	<li><a class="" th:href="@{/status}">Status</a></li>
+              	<li><a class="" th:href="@{/state}">State</a></li>
+              	<li><a class="" th:href="@{/city}">City</a></li>
+            </ul>
+          </li>
+         
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icon_documents_alt"></i>
+                          <span>Spykke Lookup</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+            <ul class="sub">
+              <li><a class="" th:href="@{/reportdata}">Cabinet Status</a></li>
+              <li><a class="" th:href="@{/couponcodeusers}">Elite Users</a></li>	
+              <li><a class="" th:href="@{/appuser}">App Users</a></li>
+              <!-- <li><a class="" th:href="@{/sysUser}">System Users</a></li> -->
+              <li><a class="" th:href="@{/role}">Role</a></li>
+              <li><a class="" th:href="@{/merchant}">Merchant</a></li>
+			  <li><a class="" th:href="@{/shop}">Shop</a></li>
+			  <li><a class="" th:href="@{/userPackage}">UserPackage</a></li>
+			  <li><a class="" th:href="@{/order}">Order</a></li>
+			  <li><a class="" th:href="@{/powerbank}">Powerbank</a></li>	
+            </ul>
+          </li>
+
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
+    

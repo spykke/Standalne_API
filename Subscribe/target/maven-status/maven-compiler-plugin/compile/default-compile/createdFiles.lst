@@ -1,0 +1,17 @@
+com/spykke/subscribe/banner/repository/VideoBannerRepository.class
+com/spykke/subscribe/banner/repository/BannerRepository.class
+com/spykke/subscribe/SubscribeApplication.class
+com/spykke/subscribe/banner/repository/TrackingBannerRepository.class
+com/spykke/subscribe/banner/repository/ClientJpaRepository.class
+com/spykke/subscribe/banner/VideoBannerApiController.class
+com/spykke/subscribe/SubscribeEntity.class
+com/spykke/subscribe/banner/entity/TrackingBannerAd.class
+com/spykke/subscribe/banner/entity/AppUser.class
+com/spykke/subscribe/banner/repository/BannerStationRepository.class
+com/spykke/subscribe/banner/repository/AppUserRepository.class
+com/spykke/subscribe/SubscribeController.class
+com/spykke/subscribe/banner/entity/BannerAd.class
+com/spykke/subscribe/banner/entity/Client.class
+com/spykke/subscribe/SubscribeRepository.class
+com/spykke/subscribe/SubscribeService.class
+com/spykke/subscribe/banner/entity/BannerStation.class

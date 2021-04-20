@@ -1,0 +1,159 @@
+package com.spykke.cabinet.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.spykke.cabinet.entity.BodyDto;
+import com.spykke.cabinet.entity.Cabinet;
+import com.spykke.cabinet.entity.CabinetLink;
+import com.spykke.cabinet.repository.CabinetJpaRepository;
+import com.spykke.cabinet.repository.CabinetLinkJpaRepository;
+
+
+@Controller
+public class CabinetStatusController {
+	
+	@Autowired
+	CabinetLinkJpaRepository  cabinetLinkJpaRepository;
+	
+	@Autowired
+	CabinetJpaRepository  cabinetJpaRepository;
+	
+	@RequestMapping("cabinetstatus")
+	public ResponseEntity<String> contactus(@RequestBody BodyDto body) {
+		
+		Calendar start = Calendar.getInstance();
+		start.setTime(body.getStartDate());
+
+		Calendar end = Calendar.getInstance();
+		end.setTime(body.getEndDate());
+		end.add(Calendar.DATE, 1);
+		
+		//SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		if(start.after(end)) {
+		//if(body.getStartDate().getTime() > body.getEndDate().getTime()) {
+			return new ResponseEntity<String>("startDate greater then endDate", HttpStatus.BAD_REQUEST) ;
+		}
+		
+		
+			
+		for (String cabinetNo : body.getStations()) {
+			Cabinet cabinet = cabinetJpaRepository.findByCabinetNo(cabinetNo) ;
+			while(start.before(end)) {
+				//String createTime = dateFormat.format(start.getTime())+"%"; 
+				//DatecreateTime = start.getTime();
+				//System.out.println(start);
+				//System.out.println(cabinetNo);
+				//System.out.println();
+				getCabinetLinks(cabinetNo, start, cabinet);
+				start.add(Calendar.DATE, 1);
+				break;
+			}
+		}
+		
+		//System.out.println("Calling controller");
+		
+		return new ResponseEntity<String>("Success", HttpStatus.OK) ;
+	}
+
+	private void getCabinetLinks(String cabinetNo, Calendar date, Cabinet cabinet) {
+		Calendar startRange = Calendar.getInstance();
+		startRange.setTime(date.getTime());
+		startRange.set(Calendar.HOUR, 0);
+		startRange.set(Calendar.MINUTE, 0);
+		startRange.set(Calendar.SECOND, 0);
+		
+		Calendar endRange = Calendar.getInstance();
+		endRange.setTime(date.getTime());
+		endRange.set(Calendar.HOUR, 11);
+		endRange.set(Calendar.MINUTE, 59);
+		endRange.set(Calendar.SECOND, 59);
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		List<CabinetLink> cabinetLinks = cabinetLinkJpaRepository.findAllByCabinetNoAndCreateTimeBetweenOrderByCreateTimeAsc(cabinetNo, startRange.getTime(), endRange.getTime());
+		
+//		for (CabinetLink cabinetLink : cabinetLinks) {
+//			System.out.println(dateFormat.format(cabinetLink.getCreateTime()));
+//			System.out.println(cabinetLink.isState());
+//		}
+//		System.out.println();
+//		System.out.println();
+		createData(cabinetLinks,date,cabinet);
+		
+//		System.out.println();
+		
+	}
+	
+	private void createData(List<CabinetLink> cabinetLinks, Calendar date, Cabinet cabinet) {
+		
+		Calendar startRange = Calendar.getInstance();
+		startRange.setTime(date.getTime());
+		startRange.set(Calendar.HOUR, 6);
+		startRange.set(Calendar.MINUTE, 30);
+		startRange.set(Calendar.SECOND, 0);
+		
+		Calendar endRange = Calendar.getInstance();
+		endRange.setTime(date.getTime());
+		endRange.add(Calendar.DATE, 1);
+		endRange.set(Calendar.HOUR, 0);
+		endRange.set(Calendar.MINUTE, 30);
+		endRange.set(Calendar.SECOND, 0);
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.println(dateFormat.format(endRange.getTime()));
+		
+		String currentStatus = "OFFLINE";
+		
+		Iterator<CabinetLink> cabinetLinkIterator = cabinetLinks.iterator();
+		
+		CabinetLink currCabinetLink = cabinetLinkIterator.next();
+		Calendar currentCabinetTime = Calendar.getInstance();
+		currentCabinetTime.setTime(currCabinetLink.getCreateTime());
+		
+		while(startRange.before(endRange)) {
+			System.out.println(dateFormat.format(startRange.getTime()));
+			
+			if(startRange.after(currentCabinetTime)) {
+				//System.out.println("Change");
+				//System.out.println("while loop");
+				while(startRange.after(currentCabinetTime)) {
+					//System.out.println("cabinet create time");
+					//System.out.println("startRange.after(currentCabinetTime");
+					//System.out.println(dateFormat.format(startRange.getTime()));
+					//System.out.println(dateFormat.format(currentCabinetTime.getTime()));
+					//System.out.println(currentStatus);
+					//System.out.println();
+					if(currCabinetLink.isState()) {
+						currentStatus = "ONLINE";
+					}else {
+						currentStatus = "OFFLINE";
+					}
+					if(cabinetLinkIterator.hasNext()) {
+						currCabinetLink = cabinetLinkIterator.next();
+						currentCabinetTime.setTime(currCabinetLink.getCreateTime());
+					}else {
+						break;
+					}
+				}
+			}
+			
+			System.out.println(currentStatus);
+			startRange.add(Calendar.MINUTE, 30);
+		}
+		
+	}
+	
+
+}
